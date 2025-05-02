@@ -1,8 +1,9 @@
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import {dirname, resolve} from 'path';
 import { fileURLToPath } from 'url';
 import { createRandomPicker} from './lib/random.js';
 import { generate } from './lib/generator.js';
+import moment from 'moment';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,4 +18,20 @@ const pickTitle = createRandomPicker(corpus.title);
 const title = pickTitle();
 const article = generate(title, {corpus});
 
-console.log(`${title}\n\n ${article.join('\n   ')}`)
+
+function saveCorpus(title, article) {
+  const outputDir = resolve(__dirname, 'output');
+  const outputTime = moment().format('YYYYMMDD-HHmmss');
+  const outputFile = resolve(outputDir, `${title}${outputTime}.txt`);
+
+  if(!existsSync(outputDir)){
+    mkdirSync(outputDir);
+  }
+
+  const text = `${title}\n\n ${article.join('\n    ')}`;
+  writeFileSync(outputFile, text);
+
+  return outputFile;
+}
+
+saveCorpus(title, article);
