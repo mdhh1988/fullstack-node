@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "command-line-args": "^6.0.1",
+    "command-line-usage": "^7.0.3",
     "moment": "^2.30.1"
   }
 }
