@@ -1,9 +1,5 @@
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
-import {dirname, resolve} from 'path';
-import { fileURLToPath } from 'url';
 import { createRandomPicker} from './lib/random.js';
 import { generate } from './lib/generator.js';
-import moment from 'moment';
 import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
@@ -24,27 +20,7 @@ function parseOptions(option = {}) {
   return options;
 }
 
-// 保存文章
-function saveCorpus(title, article) {
-  const outputDir = resolve(__dirname, 'output');
-  const outputTime = moment().format('YYYYMMDD-HHmmss');
-  const outputFile = resolve(outputDir, `${title}${outputTime}.txt`);
 
-  if(!existsSync(outputDir)){
-    mkdirSync(outputDir);
-  }
-
-  const text = `${title}\n\n ${article.join('\n    ')}`;
-  writeFileSync(outputFile, text);
-
-  return outputFile;
-}
-
-function loadCorpus(src) {
-  const path = resolve(__dirname, src);
-  const data = readFileSync(path, {encoding: 'utf-8'});
-  return JSON.parse(data);
-}
 
 // 定义帮助文档内容
 const sections = [
@@ -75,7 +51,6 @@ const sections = [
 ]
 const usage = commandLineUsage(sections);
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const corpus = loadCorpus('corpus/data.json');
 const optionDefinitions = [
   { name: 'help' },
