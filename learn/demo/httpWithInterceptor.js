@@ -1,7 +1,7 @@
 import http from 'http';
-import {Interceptor} from "./interceptor.js";
+import {Interceptor} from "../http/interceptor.js";
 
-export default class {
+class httpWithInterceptor {
   constructor() {
     const interceptor = new Interceptor();
     
@@ -37,3 +37,5 @@ export default class {
     return this.interceptor.use(aspect);
   }
 }
+
+export default httpWithInterceptor;

@@ -23,7 +23,7 @@ function route(method, rule, aspect) {
   return async (ctx, next) => {
     const req = ctx.req
     if(!ctx.url) {
-      ctx.url = url(`http://${req.headers.host}${req.url}`)
+      ctx.url = url.parse(`http://${req.headers.host}${req.url}`)
     }
     const checked = check(rule, ctx.url.pathname)
     if(!ctx.route && (method === '*' || req.method === method) && !!checked){
@@ -35,7 +35,7 @@ function route(method, rule, aspect) {
   }
 }
 
-export class Router {
+export default class Router {
   constructor(base = '') {
     this.baseUrl = base
   }
