@@ -2,6 +2,8 @@ import url from 'node:url';
 import path from 'node:path'
 
 function check(rule, pathname) {
+  // Normalize path separators to forward slashes
+  rule = rule.replace(/\\/g, '/')
   const paraMatched = rule.match(/:[^/]+/g)
   const ruleExp = new RegExp(`^${rule.replace(/:[^/]+/g, '([^/]+)')}$`)
 

@@ -1,16 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let dataCache = null
 
 function loadData() {
   if(!dataCache) {
-    const file = path.resolve(__dirname, '../../mock/data.json')
+    const file = path.resolve(__dirname, '../mock/data.json')
     const data = JSON.parse(fs.readFileSync(file, {encoding: 'utf-8'}))
-    const reports = data.dailyReports
     dataCache = {}
 
-    reports.forEach(element => {
+    data.forEach(element => {
       dataCache[element.Date] = element
     });
   }

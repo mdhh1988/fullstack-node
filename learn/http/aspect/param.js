@@ -3,7 +3,7 @@ import querystring from 'querystring'
 
 export async function param(ctx, next) {
   const { req } = ctx
-  const {query} = url(`http://${req.headers.host}${req.url}`)
+  const {query} = url.parse(`http://${req.headers.host}${req.url}`)
   ctx.params = querystring.parse(query)
   await next()
 }
